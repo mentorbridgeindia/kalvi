@@ -26,6 +26,18 @@ export type AuthProvider = (typeof AUTH_PROVIDERS)[keyof typeof AUTH_PROVIDERS];
 
 export const SESSION_COOKIE_NAME = 'kalvi_session';
 
+export const STATUS = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+} as const;
+
+export type Status = (typeof STATUS)[keyof typeof STATUS];
+
 export const QUERY_KEYS = {
   AUTH_SESSION: ['auth', 'session'] as const,
+  CATEGORIES: ['admin', 'categories'] as const,
+  SUBCATEGORIES: ['admin', 'subcategories'] as const,
+  USERS: ['admin', 'users'] as const,
 } as const;
+
+export const ADMIN_EMAIL = 'senthilkumar@mentorbridge.in';

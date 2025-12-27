@@ -7,14 +7,14 @@ import {
 } from '@heroicons/react/24/solid';
 import { useAuth } from '@workos-inc/authkit-react';
 import { useRouter } from 'next/navigation';
-import { ROUTES } from '../../lib/constants';
+import { ADMIN_EMAIL, ROUTES } from '../../lib/constants';
 import { Button, Card } from '../../ui';
 import { Loader } from '../../ui/loader';
 
 export default function DashboardPage() {
   const router = useRouter();
   const { user, isLoading } = useAuth();
-  const isAdmin = user?.object !== 'user';
+  const isAdmin = user?.email === ADMIN_EMAIL;
 
   const handleLogout = () => {
     router.push(ROUTES.LOGOUT);
@@ -92,7 +92,7 @@ export default function DashboardPage() {
             <span
               className={`text-xl font-semibold ${isAdmin ? 'text-amber-600' : 'text-green-600'}`}
             >
-              {user.object === 'user' ? 'USER' : 'ADMIN'}
+              {isAdmin ? 'ADMIN' : 'USER'}
             </span>
           </div>
           <div className="flex flex-col justify-center gap-4 bg-transparent md:col-span-1">

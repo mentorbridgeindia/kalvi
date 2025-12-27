@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuth } from '@workos-inc/authkit-react';
-import * as React from 'react';
+import { useEffect } from 'react';
 
 export default function LoginPage() {
   const { isLoading, user, getAccessToken, signIn, signUp, signOut } =
@@ -10,12 +10,25 @@ export default function LoginPage() {
   // This `/login` endpoint should be registered as the login endpoint on
   // the "Redirects" page of the WorkOS Dashboard. In a real app, this code would
   // live in a route instead of in the main <App/> component
-  React.useEffect(() => {
+  useEffect(() => {
     if (window.location.pathname === '/login') {
       // Redirects to the signIn page
       signIn();
     }
   }, [signIn]);
+
+  useEffect(() => {
+    if (!isLoading && user) {
+      const fetchAccessToken = async () => {
+        const accessToken = await getAccessToken();
+        console.log('access token', accessToken);
+        if (accessToken) {
+          window.sessionStorage.setItem('accessToken', accessToken);
+        }
+      };
+      fetchAccessToken();
+    }
+  }, [isLoading, user, getAccessToken]);
 
   // isLoading is true until WorkOS has determined the user's authentication status
   if (isLoading) {

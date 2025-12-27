@@ -1,4 +1,9 @@
-import { USER_ROLES, type UserRole } from '@/lib/constants';
+import {
+  STATUS,
+  USER_ROLES,
+  type Status,
+  type UserRole,
+} from '@/lib/constants';
 import mongoose, { Document, Schema, model } from 'mongoose';
 
 export interface IUser extends Document {
@@ -6,6 +11,7 @@ export interface IUser extends Document {
   email: string;
   name: string;
   role: UserRole;
+  status: Status;
   createdAt: Date;
 }
 
@@ -31,6 +37,12 @@ const UserSchema = new Schema<IUser>(
       default: USER_ROLES.USER,
       required: true,
     },
+    status: {
+      type: String,
+      enum: Object.values(STATUS),
+      default: STATUS.ACTIVE,
+      required: true,
+    },
     createdAt: {
       type: Date,
       default: Date.now,
@@ -42,4 +54,5 @@ const UserSchema = new Schema<IUser>(
   }
 );
 
-export const User = model<IUser>('User', UserSchema, 'User');
+export const User =
+  mongoose.models.User || model<IUser>('User', UserSchema, 'User');

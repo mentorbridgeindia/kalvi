@@ -1,4 +1,4 @@
-import { USER_ROLES, type UserRole } from '@/lib/constants';
+import { USER_ROLES, STATUS, type UserRole, type Status } from '@/lib/constants';
 
 export interface User {
   _id: string;
@@ -6,6 +6,7 @@ export interface User {
   email: string;
   name: string;
   role: UserRole;
+  status: Status;
   createdAt: Date;
 }
 
