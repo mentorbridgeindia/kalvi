@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@workos-inc/authkit-react';
-import { Loader } from '@/ui';
 import { ROUTES } from '@/lib/constants';
+import { Loader } from '@/ui';
+import { useAuth } from '@workos-inc/authkit-react';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function CallbackPage() {
   const router = useRouter();
@@ -15,7 +15,7 @@ export default function CallbackPage() {
       console.log('user', user);
       if (user) {
         console.log('pushing to dashboard');
-        router.push(ROUTES.DASHBOARD);
+        router.push('/dashboard');
       } else {
         console.log('pushing to login');
         router.push(ROUTES.LOGIN);
@@ -23,7 +23,7 @@ export default function CallbackPage() {
     } else {
       console.log('isLoading', isLoading);
     }
-  }, [user, isLoading, router]);
+  }, [user]);
 
   return (
     <div className="flex min-h-screen items-center justify-center">

@@ -1,18 +1,18 @@
 'use client';
 
+import { useAuth } from '@workos-inc/authkit-react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks/useAuth';
-import { useRole } from '@/hooks/useRole';
-import { Button, Card, Loader } from '@/ui';
-import { ROUTES } from '@/lib/constants';
+import { ROUTES } from '../../lib/constants';
+import { Button, Card } from '../../ui';
+import { Loader } from '../../ui/loader';
 
 export default function DashboardPage() {
   const router = useRouter();
-  const { user, isLoading, signOut } = useAuth();
-  const { isAdmin } = useRole();
+  const { user, isLoading } = useAuth();
+  const isAdmin = user?.object !== 'user';
 
   const handleLogout = () => {
-    signOut();
+    router.push(ROUTES.LOGOUT);
   };
 
   if (isLoading) {
@@ -22,6 +22,8 @@ export default function DashboardPage() {
       </div>
     );
   }
+
+  console.log('user', user);
 
   if (!user) {
     router.push(ROUTES.LOGIN);
@@ -52,7 +54,9 @@ export default function DashboardPage() {
           <div className="space-y-4">
             <div>
               <p className="text-sm text-secondary-600">Name</p>
-              <p className="text-lg font-semibold">{user.name}</p>
+              <p className="text-lg font-semibold">
+                {user.firstName} {user.lastName}
+              </p>
             </div>
             <div>
               <p className="text-sm text-secondary-600">Email</p>
@@ -60,7 +64,9 @@ export default function DashboardPage() {
             </div>
             <div>
               <p className="text-sm text-secondary-600">Role</p>
-              <p className="text-lg font-semibold">{user.role}</p>
+              <p className="text-lg font-semibold">
+                {user.object === 'user' ? 'USER' : 'ADMIN'}
+              </p>
             </div>
           </div>
         </Card>
@@ -68,4 +74,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-

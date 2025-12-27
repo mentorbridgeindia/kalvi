@@ -10,7 +10,7 @@ export const ROUTES = {
   AUTH: '/auth',
   LOGIN: '/auth/login',
   CALLBACK: '/auth/callback',
-  LOGOUT: '/auth/logout',
+  LOGOUT: '/logout',
   DASHBOARD: '/dashboard',
   ADMIN: '/admin',
 } as const;
